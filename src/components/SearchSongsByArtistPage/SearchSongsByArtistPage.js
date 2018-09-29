@@ -4,6 +4,7 @@ import './SearchSongsByArtist.css';
 import {getQueryString} from '../../helper/helperfunctions';
 import {AuthTokenContext} from '../../context/context';
 import SongsTable from './SongsTable';
+import {FormattedMessage, FormattedNumber} from 'react-intl';
 
 
 const mapArtist = artist => ({
@@ -14,7 +15,7 @@ const mapArtist = artist => ({
     name: artist.name,
     popularity: artist.popularity,
     uri: artist.uri
-})
+});
 
 class SearchSongsByArtistPage extends React.Component {
 
@@ -42,9 +43,9 @@ class SearchSongsByArtistPage extends React.Component {
             .then(data => {
                 this.setState({
                     albums: data.items
-                })
-            })
-    }
+                });
+            });
+    };
 
     handleSearchChange = (value, authToken) => {
         this.setState({isLoading: true});
@@ -60,16 +61,26 @@ class SearchSongsByArtistPage extends React.Component {
         })
             .then(res => res.json())
             .then(data => {
-                if (data.artists != null)  {
+                if (data.artists != null) {
                     this.setState({
                         searchResults: data.artists.items.map(mapArtist)
-                    })
+                    });
                 }
-            })
+            });
 
     };
 
-    searchResultRenderer = item => item.name
+    searchResultRenderer = item =>
+        <div className='instant-search-cell'>
+            {item.images.length > 0 &&
+            <div className='instant-search-cell-content'><img src={item.images[item.images.length - 1].url} width={32}
+                                                              height={32}/></div>
+            }
+            <div className='instant-search-cell-content'>
+                <div>{item.name}</div>
+                <div><FormattedNumber value={item.followers}/></div>
+            </div>
+        </div>;
 
     render() {
         return (

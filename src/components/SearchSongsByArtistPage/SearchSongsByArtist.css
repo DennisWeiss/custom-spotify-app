@@ -5,3 +5,43 @@
 .search {
     margin-left: 100px;
 }
+
+div.message {
+    color: white !important;
+    background: #222222 !important;
+}
+
+div.header {
+    color: white !important;
+}
+
+.ui.search>.results .result {
+    padding: 2px !important;
+    color: white !important;
+    background: #222222 !important;
+    border-bottom: #999999 1px solid !important;
+    min-height: 46px;
+}
+
+.results {
+    border: #999999 1px solid !important;
+}
+
+.instant-search-cell {
+    display: flex;
+}
+
+.instant-search-cell-content {
+    display: table-cell;
+    padding: 5px;
+    float: left;
+    white-space: nowrap;
+}
+
+.instant-search-cell-content-number {
+    display: table-cell;
+    padding: 5px;
+    text-align: right;
+    width: 99%;
+    margin-right: 0;
+}
