@@ -45,3 +45,16 @@ div.header {
     width: 99%;
     margin-right: 0;
 }
+
+@media (min-width: 800px) {
+    .results-table {
+        margin: 30px 60px;
+    }
+}
+
+@media (max-width: 799px) {
+    .results-table {
+        margin: 30px 5px;
+    }
+}
+

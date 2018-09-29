@@ -17,6 +17,20 @@ const mapArtist = artist => ({
     uri: artist.uri
 });
 
+const mapTrack = (trackData, albumData) => ({
+    id: trackData.id,
+    name: trackData.name,
+    artists: trackData.artists,
+    duration_ms: trackData.duration_ms,
+    explicit: trackData.explicit,
+    track_url: trackData.external_urls.spotify,
+    preview_url: trackData.preview_url,
+    uri: trackData.uri,
+    images: albumData.images,
+    album: albumData.name,
+    release_date: albumData.release_date
+});
+
 class SearchSongsByArtistPage extends React.Component {
 
     constructor(props) {
@@ -24,27 +38,51 @@ class SearchSongsByArtistPage extends React.Component {
         this.state = {
             isLoadingSearch: false,
             searchResults: [],
-            albums: []
+            songs: []
         };
     }
 
     selectSearchResult = (result, authToken) => {
-        this.setState({artist: result.id});
+        this.setState({
+            artist: result.id,
+            songs: []
+        }, () => {
+            fetch(getQueryString(`https://api.spotify.com/v1/artists/${result.id}/albums`, {
+                limit: 50,
+                offset: 0
+            }), {
+                headers: {
+                    'Authorization': 'Bearer ' + authToken
+                }
+            })
+                .then(res => res.json())
+                .then(data => {
+                    const promises = [];
 
-        fetch(getQueryString(`https://api.spotify.com/v1/artists/${result.id}/albums`, {
-            limit: 50,
-            offset: 0
-        }), {
-            headers: {
-                'Authorization': 'Bearer ' + authToken
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                this.setState({
-                    albums: data.items
+                    data.items.forEach(album => {
+                        promises.push(fetch(`${album.href}/tracks`, {
+                            headers: {
+                                'Authorization': 'Bearer ' + authToken
+                            }
+                        })
+                            .then(res => res.json())
+                            .then(data => data.items.map(trackData => mapTrack(trackData, album)))
+                            .then(tracks => new Promise(resolve => resolve(tracks.filter(track =>
+                                track.artists.find(artist => artist.id === result.id) != null
+                            )))));
+                    });
+
+                    Promise.all(promises)
+                        .then(trackData => {
+                            const songs = trackData.reduce((accSongs, trackData) => {
+                                return accSongs.concat(trackData);
+                            });
+                            this.setState({songs});
+                        });
                 });
-            });
+        });
+
+
     };
 
     handleSearchChange = (value, authToken) => {
@@ -83,6 +121,8 @@ class SearchSongsByArtistPage extends React.Component {
         </div>;
 
     render() {
+        console.log(this.state.songs);
+
         return (
             <AuthTokenContext.Consumer>
                 {
@@ -94,7 +134,9 @@ class SearchSongsByArtistPage extends React.Component {
                                     onSearchChange={(e, {value}) => this.handleSearchChange(value, authToken)}
                                     results={this.state.searchResults}
                                     resultRenderer={this.searchResultRenderer}/>
-                            <SongsTable albums={this.state.albums}/>
+                            <div className='results-table'>
+                                <SongsTable songs={this.state.songs}/>
+                            </div>
                         </div>
                 }
 
