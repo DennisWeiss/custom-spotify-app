@@ -2,7 +2,7 @@ import React from 'react'
 import {FormattedMessage} from 'react-intl'
 import './SpotifyLogin.css'
 import {getQueryString} from '../../helper/helperfunctions'
-import {spotifyClientId, redirectUri} from '../configuration/configuration'
+import {spotifyClientId, redirectUri} from '../../configuration/configuration'
 
 const redirectUserToAuthentication = () => {
     window.location.href = getQueryString('https://accounts.spotify.com/authorize', {
