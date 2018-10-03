@@ -12,7 +12,7 @@ const ensureHasLeadingZeros = (number, decimalPlaces) => {
 
 const formatDuration = duration => `${Math.floor(duration / 60000)}:${ensureHasLeadingZeros(Math.floor(duration / 1000) % 60, 2)}`
 
-const SongsTable = ({songs}) => {
+const SongsTable = ({songs, sortingColumn, sortingDirection, handleSorting}) => {
 
     return (
         <Table sortable celled padded>
@@ -20,22 +20,30 @@ const SongsTable = ({songs}) => {
                 <Table.Row>
                     <Table.HeaderCell>
                     </Table.HeaderCell>
-                    <Table.HeaderCell>
+                    <Table.HeaderCell
+                        sorted={sortingColumn === 'SONG_TITLE' ? sortingDirection : null}
+                        onClick={handleSorting('SONG_TITLE')}>
                         <FormattedMessage id='SONG_TITLE'/>
                     </Table.HeaderCell>
                     <Table.HeaderCell>
                         <FormattedMessage id='ARTISTS'/>
                     </Table.HeaderCell>
-                    <Table.HeaderCell>
+                    <Table.HeaderCell
+                        sorted={sortingColumn === 'ALBUM' ? sortingDirection : null}
+                        onClick={handleSorting('ALBUM')}>
                         <FormattedMessage id='ALBUM'/>
                     </Table.HeaderCell>
-                    <Table.HeaderCell>
+                    <Table.HeaderCell
+                        sorted={sortingColumn === 'RELEASE_DATE' ? sortingDirection : null}
+                        onClick={handleSorting('RELEASE_DATE')}>
                         <FormattedMessage id='RELEASE_DATE'/>
                     </Table.HeaderCell>
                     <Table.HeaderCell>
                         <FormattedMessage id='PREVIEW'/>
                     </Table.HeaderCell>
-                    <Table.HeaderCell>
+                    <Table.HeaderCell
+                        sorted={sortingColumn === 'DURATION' ? sortingDirection : null}
+                        onClick={handleSorting('DURATION')}>
                         <FormattedMessage id='DURATION'/>
                     </Table.HeaderCell>
                 </Table.Row>

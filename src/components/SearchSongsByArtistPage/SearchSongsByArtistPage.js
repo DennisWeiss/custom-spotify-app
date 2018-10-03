@@ -5,6 +5,8 @@ import {getQueryString} from '../../helper/helperfunctions';
 import {AuthTokenContext} from '../../context/context';
 import SongsTable from './SongsTable';
 import {FormattedMessage, FormattedNumber} from 'react-intl';
+import moment from 'moment';
+
 
 
 const mapArtist = artist => ({
@@ -31,19 +33,54 @@ const mapTrack = (trackData, albumData) => ({
     release_date: albumData.release_date
 });
 
+const columnComparator = clickedColumn => {
+    switch (clickedColumn) {
+        case 'SONG_TITLE':
+            return (a, b) => {
+                if (a.name < b.name) {
+                    return -1
+                }
+                if (a.name > b.name) {
+                    return 1
+                }
+                return 0
+            }
+        case 'ALBUM':
+            return (a, b) => {
+                if (a.album < b.album) {
+                    return -1
+                }
+                if (a.album > b.album) {
+                    return 1
+                }
+                return 0
+            }
+        case 'DURATION':
+            return (a, b) => a.duration_ms - b.duration_ms
+        case 'RELEASE_DATE':
+            return (a, b) =>  a.release_date && b.release_date ? moment(a.release_date).unix() - moment(b.release_date).unix() : 0
+        default:
+            return (a, b) => 0
+    }
+}
+
 class SearchSongsByArtistPage extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             isLoadingSearch: false,
+            searchValue: '',
             searchResults: [],
-            songs: []
+            songs: [],
+            sortingColumn: 'RELEASE_DATE',
+            sortingDirection: 'descending'
         };
     }
 
     selectSearchResult = (result, authToken) => {
         this.setState({
+            searchValue: result.name,
             artist: result.id,
             songs: []
         }, () => {
@@ -86,7 +123,10 @@ class SearchSongsByArtistPage extends React.Component {
     };
 
     handleSearchChange = (value, authToken) => {
-        this.setState({isLoading: true});
+        this.setState({
+            isLoading: true,
+            searchValue: value
+        });
         fetch(getQueryString('https://api.spotify.com/v1/search', {
             q: value,
             type: 'artist',
@@ -107,6 +147,26 @@ class SearchSongsByArtistPage extends React.Component {
             });
 
     };
+
+    handleSorting = clickedColumn => () => {
+        if (this.state.sortingColumn !== clickedColumn) {
+            this.setState({
+                sortingColumn: clickedColumn,
+                songs: this.state.songs.sort(columnComparator(clickedColumn)),
+                sortingDirection: 'ascending',
+            })
+        } else if (this.state.sortingDirection === 'ascending') {
+            this.setState({
+                songs: this.state.songs.reverse(),
+                sortingDirection: this.state.sortingDirection === 'ascending' ? 'descending' : 'ascending',
+            })
+        } else if (this.state.sortingDirection === 'descending') {
+            this.setState({
+                sortingColumn: null,
+                sortingDirection: null
+            })
+        }
+    }
 
     searchResultRenderer = item =>
         <div className='instant-search-cell'>
@@ -130,12 +190,16 @@ class SearchSongsByArtistPage extends React.Component {
                         <div className='search-songs-by-artist'>
                             <Search className='search'
                                     loading={this.state.isLoadingSearch}
+                                    value={this.state.searchValue}
                                     onResultSelect={(e, {result}) => this.selectSearchResult(result, authToken)}
                                     onSearchChange={(e, {value}) => this.handleSearchChange(value, authToken)}
                                     results={this.state.searchResults}
                                     resultRenderer={this.searchResultRenderer}/>
                             <div className='results-table'>
-                                <SongsTable songs={this.state.songs}/>
+                                <SongsTable songs={this.state.songs}
+                                            sortingColumn={this.state.sortingColumn}
+                                            sortingDirection={this.state.sortingDirection}
+                                            handleSorting={this.handleSorting}/>
                             </div>
                         </div>
                 }
