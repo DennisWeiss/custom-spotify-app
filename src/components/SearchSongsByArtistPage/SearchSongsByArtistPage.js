@@ -112,7 +112,7 @@ class SearchSongsByArtistPage extends React.Component {
                         .then(trackData => {
                             const songs = trackData
                                 .reduce((accSongs, trackData) => accSongs.concat(trackData))
-                                .sort((a, b) => moment(a).isBefore(b))
+                                .sort((a, b) => moment(a).isBefore(moment(b)))
                             this.setState({songs})
                         })
                 })
