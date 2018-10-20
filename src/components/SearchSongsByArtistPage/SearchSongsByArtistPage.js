@@ -1,12 +1,11 @@
-import React from 'react';
-import {Search} from 'semantic-ui-react';
-import './SearchSongsByArtist.css';
-import {getQueryString} from '../../helper/helperfunctions';
-import {AuthTokenContext} from '../../context/context';
-import SongsTable from './SongsTable';
-import {FormattedMessage, FormattedNumber} from 'react-intl';
-import moment from 'moment';
-
+import React from 'react'
+import {Search} from 'semantic-ui-react'
+import './SearchSongsByArtist.css'
+import {getQueryString} from '../../helper/helperfunctions'
+import {AuthTokenContext} from '../../context/context'
+import SongsTable from './SongsTable'
+import {FormattedMessage, FormattedNumber} from 'react-intl'
+import moment from 'moment'
 
 
 const mapArtist = artist => ({
@@ -17,7 +16,7 @@ const mapArtist = artist => ({
     name: artist.name,
     popularity: artist.popularity,
     uri: artist.uri
-});
+})
 
 const mapTrack = (trackData, albumData) => ({
     id: trackData.id,
@@ -31,7 +30,7 @@ const mapTrack = (trackData, albumData) => ({
     images: albumData.images,
     album: albumData.name,
     release_date: albumData.release_date
-});
+})
 
 const columnComparator = clickedColumn => {
     switch (clickedColumn) {
@@ -58,7 +57,7 @@ const columnComparator = clickedColumn => {
         case 'DURATION':
             return (a, b) => a.duration_ms - b.duration_ms
         case 'RELEASE_DATE':
-            return (a, b) =>  a.release_date && b.release_date ? moment(a.release_date).unix() - moment(b.release_date).unix() : 0
+            return (a, b) => a.release_date && b.release_date ? moment(a.release_date).unix() - moment(b.release_date).unix() : 0
         default:
             return (a, b) => 0
     }
@@ -67,7 +66,7 @@ const columnComparator = clickedColumn => {
 class SearchSongsByArtistPage extends React.Component {
 
     constructor(props) {
-        super(props);
+        super(props)
         this.state = {
             isLoadingSearch: false,
             searchValue: '',
@@ -75,7 +74,7 @@ class SearchSongsByArtistPage extends React.Component {
             songs: [],
             sortingColumn: 'RELEASE_DATE',
             sortingDirection: 'descending'
-        };
+        }
     }
 
     selectSearchResult = (result, authToken) => {
@@ -94,7 +93,7 @@ class SearchSongsByArtistPage extends React.Component {
             })
                 .then(res => res.json())
                 .then(data => {
-                    const promises = [];
+                    const promises = []
 
                     data.items.forEach(album => {
                         promises.push(fetch(`${album.href}/tracks`, {
@@ -106,27 +105,27 @@ class SearchSongsByArtistPage extends React.Component {
                             .then(data => data.items.map(trackData => mapTrack(trackData, album)))
                             .then(tracks => new Promise(resolve => resolve(tracks.filter(track =>
                                 track.artists.find(artist => artist.id === result.id) != null
-                            )))));
-                    });
+                            )))))
+                    })
 
                     Promise.all(promises)
                         .then(trackData => {
-                            const songs = trackData.reduce((accSongs, trackData) => {
-                                return accSongs.concat(trackData);
-                            });
-                            this.setState({songs});
-                        });
-                });
-        });
+                            const songs = trackData
+                                .reduce((accSongs, trackData) => accSongs.concat(trackData))
+                                .sort((a, b) => moment(a).isBefore(b))
+                            this.setState({songs})
+                        })
+                })
+        })
 
 
-    };
+    }
 
     handleSearchChange = (value, authToken) => {
         this.setState({
             isLoading: true,
             searchValue: value
-        });
+        })
         fetch(getQueryString('https://api.spotify.com/v1/search', {
             q: value,
             type: 'artist',
@@ -142,11 +141,11 @@ class SearchSongsByArtistPage extends React.Component {
                 if (data.artists != null) {
                     this.setState({
                         searchResults: data.artists.items.map(mapArtist)
-                    });
+                    })
                 }
-            });
+            })
 
-    };
+    }
 
     handleSorting = clickedColumn => () => {
         if (this.state.sortingColumn !== clickedColumn) {
@@ -178,11 +177,9 @@ class SearchSongsByArtistPage extends React.Component {
                 <div>{item.name}</div>
                 <div><FormattedNumber value={item.followers}/></div>
             </div>
-        </div>;
+        </div>
 
     render() {
-        console.log(this.state.songs);
-
         return (
             <AuthTokenContext.Consumer>
                 {
@@ -205,8 +202,8 @@ class SearchSongsByArtistPage extends React.Component {
                 }
 
             </AuthTokenContext.Consumer>
-        );
+        )
     }
 }
 
-export default SearchSongsByArtistPage;
+export default SearchSongsByArtistPage
