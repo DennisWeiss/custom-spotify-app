@@ -3,9 +3,11 @@ import moment from 'moment'
 
 const getAuthToken = () => {
     const token_updated = localStorage.getItem('token_updated')
-    if (token_updated && moment().subtract(60, 'minutes').isBefore(moment(token_updated))) {
+    const expires_in = localStorage.getItem('expires_in')
+    if (token_updated && moment().subtract(parseInt(expires_in, 10), 'seconds').isBefore(moment(token_updated))) {
         return localStorage.getItem('auth_token')
     }
+    ['auth_token', 'token_udpated', 'expires_in'].forEach(key => localStorage.removeItem(key))
 }
 
 const setAuthToken = token => {

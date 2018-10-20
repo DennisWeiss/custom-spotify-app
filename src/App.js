@@ -14,14 +14,15 @@ class App extends Component {
 
     constructor(props) {
         super(props);
-        const {access_token} = queryString.parse(window.location.hash);
+        const {access_token, expires_in} = queryString.parse(window.location.hash);
+        const existing_auth_token = getAuthToken()
 
-        if (access_token != null) {
-            setAuthToken(access_token);
+        if (access_token != null && existing_auth_token == null) {
+            setAuthToken(access_token, expires_in);
         }
 
         this.state = {
-            authToken: access_token,
+            authToken: existing_auth_token == null ? access_token : null,
             locale: 'en',
             activeMenuIndex: 0
         };
