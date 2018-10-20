@@ -10,9 +10,10 @@ const getAuthToken = () => {
     ['auth_token', 'token_udpated', 'expires_in'].forEach(key => localStorage.removeItem(key))
 }
 
-const setAuthToken = token => {
+const setAuthToken = (token, expires_in) => {
     localStorage.setItem('auth_token', token)
     localStorage.setItem('token_updated', moment().toISOString())
+    localStorage.setItem('expires_in', expires_in)
 }
 
 const getQueryString = (url, params) => {
