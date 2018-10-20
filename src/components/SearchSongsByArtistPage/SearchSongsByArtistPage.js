@@ -110,10 +110,11 @@ class SearchSongsByArtistPage extends React.Component {
 
                     Promise.all(promises)
                         .then(trackData => {
-                            const songs = trackData
-                                .reduce((accSongs, trackData) => accSongs.concat(trackData))
-                                .sort((a, b) => moment(a.release_date).isBefore(moment(b.release_date)))
-                            this.setState({songs})
+                            this.setState({
+                                songs: trackData
+                                    .reduce((accSongs, trackData) => accSongs.concat(trackData))
+                                    .sort((a, b) => a.release_date && b.release_date ? moment(b.release_date).unix() - moment(a.release_date).unix() : 0)
+                            })
                         })
                 })
         })
