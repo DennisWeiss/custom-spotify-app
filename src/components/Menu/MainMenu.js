@@ -17,6 +17,9 @@ const MainMenu = ({activeIndex, onMenuItemClick}) => {
                 <Menu.Item index={0} onClick={onMenuItemClick}>
                     <FormattedMessage id='SEARCH_SONGS_BY_ARTIST'/>
                 </Menu.Item>
+                <Menu.Item index={1} onClick={onMenuItemClick}>
+                    <FormattedMessage id='FAVORITE_ARTISTS'/>
+                </Menu.Item>
             </Container>
         </Menu>
     )

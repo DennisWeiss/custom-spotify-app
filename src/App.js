@@ -8,6 +8,7 @@ import {getAuthToken, setAuthToken} from './helper/helperfunctions';
 import SpotifyLogin from './components/SpotifyLogin/SpotifyLogin';
 import queryString from './helper/query-string';
 import {AuthTokenContext} from './context/context';
+import FavoriteArtists from "./components/FavoriteArtists/FavoriteArtists";
 
 
 class App extends Component {
@@ -46,15 +47,17 @@ class App extends Component {
                             <MainMenu activeIndex={this.state.activeMenuIndex}
                                       onMenuItemClick={this.onMainMenuItemClick}/>
                         </div>
-
                         {
                             !this.state.authToken &&
                             <SpotifyLogin/>
                         }
-
                         {
                             this.state.authToken && this.state.activeMenuIndex === 0 &&
                             <SearchSongsByArtistPage/>
+                        }
+                        {
+                            this.state.authToken && this.state.activeMenuIndex === 1 &&
+                            <FavoriteArtists/>
                         }
                     </div>
                 </AuthTokenContext.Provider>

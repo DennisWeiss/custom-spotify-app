@@ -1,7 +1,7 @@
 {
   "name": "custom-spotify",
   "version": "0.1.0",
-  "homepage": "http://new.gr-esports.de/spotify",
+  "homepage": "http://gr-esports.de/spotify",
   "private": true,
   "dependencies": {
     "font-awesome": "^4.7.0",
