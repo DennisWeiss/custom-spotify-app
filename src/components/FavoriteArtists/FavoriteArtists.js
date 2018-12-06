@@ -2,6 +2,7 @@ import React from "react";
 import {AuthTokenContext} from "../../context/context";
 import FavoriteArtistsTable from "./FavoriteArtistsTable";
 import {getQueryString} from "../../helper/helperfunctions";
+import './FavoriteArtists.css'
 
 class FavoriteArtists extends React.Component {
 
@@ -30,8 +31,10 @@ class FavoriteArtists extends React.Component {
 
     render() {
         return (
-            <div>
-                <FavoriteArtistsTable artists={this.state.artists} authToken={this.props.authToken}/>
+            <div className="top-artist-page">
+                <div className='top-artists-table'>
+                    <FavoriteArtistsTable artists={this.state.artists} authToken={this.props.authToken}/>
+                </div>
             </div>
         )
     }

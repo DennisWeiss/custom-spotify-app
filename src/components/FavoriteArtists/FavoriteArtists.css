@@ -1,0 +1,19 @@
+
+/*.top-artist-page {*/
+    /*display: flex;*/
+    /*justify-content: center;*/
+/*}*/
+
+
+@media (min-width: 800px) {
+    .top-artists-table {
+        margin: 130px auto;
+        max-width: 1000px;
+    }
+}
+
+@media (max-width: 799px) {
+    .top-artists-table {
+        margin: 130px 5px;
+    }
+}
