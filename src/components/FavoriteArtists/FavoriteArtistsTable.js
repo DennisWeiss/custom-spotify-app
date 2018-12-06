@@ -1,7 +1,7 @@
 import React from "react";
-import {Table} from "semantic-ui-react";
+import {Progress, Table} from "semantic-ui-react";
 import {FormattedMessage, FormattedNumber} from "react-intl";
-import moment from "moment";
+import './FavoriteArtistsTable.css'
 
 const FavoriteArtistsTable = ({artists}) => {
     return <Table celled padded>
@@ -36,7 +36,11 @@ const FavoriteArtistsTable = ({artists}) => {
                     <Table.Cell>
                         <FormattedNumber style='decimal' value={artist.followers.total}/>
                     </Table.Cell>
-
+                    <Table.Cell>
+                        <div className='popularity-indicator-wrapper'>
+                            <Progress className='popularity-indicator' color='green' percent={artist.popularity}/>
+                        </div>
+                    </Table.Cell>
                 </Table.Row>
             )}
         </Table.Body>

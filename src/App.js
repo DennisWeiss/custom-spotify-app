@@ -57,7 +57,7 @@ class App extends Component {
                         }
                         {
                             this.state.authToken && this.state.activeMenuIndex === 1 &&
-                            <FavoriteArtists/>
+                            <FavoriteArtists authToken={this.state.authToken}/>
                         }
                     </div>
                 </AuthTokenContext.Provider>
