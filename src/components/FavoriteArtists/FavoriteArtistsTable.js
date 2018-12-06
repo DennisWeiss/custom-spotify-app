@@ -32,7 +32,7 @@ const FavoriteArtistsTable = ({artists}) => {
                             <img src={artist.images[artist.images.length - 1].url} width={48} height={48}/>
                         }
                     </Table.Cell>
-                    <Table.Cell>{artist.name}</Table.Cell>
+                    <Table.Cell><a href={artist.external_urls.spotify} target='_blank'>{artist.name}</a></Table.Cell>
                     <Table.Cell>
                         <FormattedNumber style='decimal' value={artist.followers.total}/>
                     </Table.Cell>
