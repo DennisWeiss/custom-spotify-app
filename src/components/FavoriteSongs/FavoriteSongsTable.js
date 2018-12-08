@@ -61,13 +61,13 @@ const FavoriteSongsTable = ({songs, sortingColumn, sortingDirection, handleSorti
                             <img src={song.images[song.images.length - 1].url} width={48} height={48}/>
                             }
                         </Table.Cell>
-                        <Table.Cell width={8}>
+                        <Table.Cell width={5}>
                             <a href={song.track_url} target="_blank">{song.name}</a>
                         </Table.Cell>
-                        <Table.Cell width={8}>{song.artists.map(artist => artist.name).join(', ')}</Table.Cell>
-                        <Table.Cell width={8}>{song.album}</Table.Cell>
-                        <Table.Cell width={4}><div className='no-wrap'>{moment(song.release_date).format('ll')}</div></Table.Cell>
-                        <Table.Cell width={4}>
+                        <Table.Cell width={5}>{song.artists.map(artist => artist.name).join(', ')}</Table.Cell>
+                        <Table.Cell width={5}>{song.album}</Table.Cell>
+                        <Table.Cell width={3}><div className='no-wrap'>{moment(song.release_date).format('ll')}</div></Table.Cell>
+                        <Table.Cell width={3}>
                             <audio controls>
                                 <source src={song.preview_url}/>
                             </audio>
