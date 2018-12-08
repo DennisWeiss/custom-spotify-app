@@ -9,6 +9,7 @@ import SpotifyLogin from './components/SpotifyLogin/SpotifyLogin';
 import queryString from './helper/query-string';
 import {AuthTokenContext} from './context/context';
 import FavoriteArtists from "./components/FavoriteArtists/FavoriteArtists";
+import FavoriteSongs from "./components/FavoriteSongs/FavoriteSongs";
 
 
 class App extends Component {
@@ -58,6 +59,10 @@ class App extends Component {
                         {
                             this.state.authToken && this.state.activeMenuIndex === 1 &&
                             <FavoriteArtists authToken={this.state.authToken}/>
+                        }
+                        {
+                            this.state.authToken && this.state.activeMenuIndex === 2 &&
+                            <FavoriteSongs authToken={this.state.authToken}/>
                         }
                     </div>
                 </AuthTokenContext.Provider>

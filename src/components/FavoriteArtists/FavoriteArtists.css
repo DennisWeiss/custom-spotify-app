@@ -8,12 +8,13 @@
 @media (min-width: 800px) {
     .top-artists-table {
         margin: 130px auto;
+        padding: 0 20px;
         max-width: 1000px;
     }
 }
 
 @media (max-width: 799px) {
     .top-artists-table {
-        margin: 130px 5px;
+        margin: 130px 20px;
     }
 }

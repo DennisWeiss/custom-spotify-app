@@ -3,6 +3,8 @@ import {Progress, Table} from "semantic-ui-react";
 import {FormattedMessage, FormattedNumber} from "react-intl";
 import './FavoriteArtistsTable.css'
 
+
+
 const FavoriteArtistsTable = ({artists}) => {
     return <Table celled padded>
         <Table.Header>
@@ -25,18 +27,18 @@ const FavoriteArtistsTable = ({artists}) => {
         <Table.Body>
             {artists.map((artist, index) =>
                 <Table.Row key={artist.id}>
-                    <Table.Cell>{index + 1}</Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell width={2}>{index + 1}</Table.Cell>
+                    <Table.Cell width={2}>
                         {
                             artist.images.length > 0 &&
                             <img src={artist.images[artist.images.length - 1].url} width={48} height={48}/>
                         }
                     </Table.Cell>
-                    <Table.Cell><a href={artist.external_urls.spotify} target='_blank'>{artist.name}</a></Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell width={10}><a href={artist.external_urls.spotify} target='_blank'>{artist.name}</a></Table.Cell>
+                    <Table.Cell width={6}>
                         <FormattedNumber style='decimal' value={artist.followers.total}/>
                     </Table.Cell>
-                    <Table.Cell>
+                    <Table.Cell width={4}>
                         <div className='popularity-indicator-wrapper'>
                             <Progress className='popularity-indicator' color='green' percent={artist.popularity}/>
                         </div>

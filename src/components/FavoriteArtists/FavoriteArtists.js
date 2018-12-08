@@ -17,7 +17,8 @@ class FavoriteArtists extends React.Component {
     fetchArtists() {
         fetch(getQueryString('https://api.spotify.com/v1/me/top/artists', {
             limit: 50,
-            offset: 0
+            offset: 0,
+            time_range: 'long_term'
         }), {
             headers: {
                 'Authorization': 'Bearer ' + this.props.authToken

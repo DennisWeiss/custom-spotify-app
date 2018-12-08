@@ -8,7 +8,8 @@ const redirectUserToAuthentication = () => {
     window.location.href = getQueryString('https://accounts.spotify.com/authorize', {
         client_id: spotifyClientId,
         redirect_uri: redirectUri,
-        response_type: 'token'
+        response_type: 'token',
+        scope: 'user-top-read'
     })
 }
 
