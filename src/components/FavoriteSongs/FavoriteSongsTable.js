@@ -53,24 +53,26 @@ const FavoriteSongsTable = ({songs, sortingColumn, sortingDirection, handleSorti
             <Table.Body>
                 {songs.map((song, index) =>
                     <Table.Row key={song.id}>
-                        <Table.Cell>
+                        <Table.Cell width={1}>
                             {index + 1}
                         </Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell width={1}>
                             {song.images.length > 0 &&
                             <img src={song.images[song.images.length - 1].url} width={48} height={48}/>
                             }
                         </Table.Cell>
-                        <Table.Cell><a href={song.track_url} target="_blank">{song.name}</a></Table.Cell>
-                        <Table.Cell>{song.artists.map(artist => artist.name).join(', ')}</Table.Cell>
-                        <Table.Cell>{song.album}</Table.Cell>
-                        <Table.Cell><div className='no-wrap'>{moment(song.release_date).format('ll')}</div></Table.Cell>
-                        <Table.Cell>
+                        <Table.Cell width={8}>
+                            <a href={song.track_url} target="_blank">{song.name}</a>
+                        </Table.Cell>
+                        <Table.Cell width={8}>{song.artists.map(artist => artist.name).join(', ')}</Table.Cell>
+                        <Table.Cell width={8}>{song.album}</Table.Cell>
+                        <Table.Cell width={4}><div className='no-wrap'>{moment(song.release_date).format('ll')}</div></Table.Cell>
+                        <Table.Cell width={4}>
                             <audio controls>
                                 <source src={song.preview_url}/>
                             </audio>
                         </Table.Cell>
-                        <Table.Cell>{formatDuration(song.duration_ms)}</Table.Cell>
+                        <Table.Cell width={2}>{formatDuration(song.duration_ms)}</Table.Cell>
                     </Table.Row>
                 )}
             </Table.Body>
