@@ -35,7 +35,7 @@ const FavoriteArtistsTable = ({artists}) => {
                         }
                     </Table.Cell>
                     <Table.Cell width={10}><a href={artist.external_urls.spotify} target='_blank'>{artist.name}</a></Table.Cell>
-                    <Table.Cell width={8}>
+                    <Table.Cell width={6}>
                         <FormattedNumber style='decimal' value={artist.followers.total}/>
                     </Table.Cell>
                     <Table.Cell width={3}>
