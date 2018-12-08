@@ -40,10 +40,11 @@ class FavoriteSongs extends React.Component {
         })
             .then(res => res.json())
             .then(data => {
-                console.log(data)
-                this.setState((prevState, props) => ({
-                    songs: data.items.map(mapSong)
-                }))
+                if (data.items != null) {
+                    this.setState((prevState, props) => ({
+                        songs: data.items.map(mapSong)
+                    }))
+                }
             })
     }
 

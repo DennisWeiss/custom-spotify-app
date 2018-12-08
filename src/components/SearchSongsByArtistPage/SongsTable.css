@@ -2,11 +2,7 @@
     white-space: nowrap;
 }
 
-/*.ui.table {*/
-    /*background: #282828 !important;*/
-    /*color: white !important;*/
-/*}*/
-
-/*tr {*/
-    /*border-bottom: #dddddd solid 10px !important;*/
-/*}*/
+.songs-paginator {
+    /*display: inline-block;*/
+    text-align: center;
+}
