@@ -1,10 +1,13 @@
 .popularity-indicator {
     width: 60px;
-    height: 0.6em;
+    height: 0.6em !important;
+    margin: 5px auto !important;
 }
 
 .ui.progress .bar {
     height: 0.6em !important;
+    /*display: flex !important;*/
+    /*justify-content: center !important;*/
 }
 
 .popularity-indicator-wrapper {

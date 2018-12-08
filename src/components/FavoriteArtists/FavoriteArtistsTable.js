@@ -27,18 +27,18 @@ const FavoriteArtistsTable = ({artists}) => {
         <Table.Body>
             {artists.map((artist, index) =>
                 <Table.Row key={artist.id}>
-                    <Table.Cell width={2}>{index + 1}</Table.Cell>
-                    <Table.Cell width={2}>
+                    <Table.Cell width={1}>{index + 1}</Table.Cell>
+                    <Table.Cell width={1}>
                         {
                             artist.images.length > 0 &&
                             <img src={artist.images[artist.images.length - 1].url} width={48} height={48}/>
                         }
                     </Table.Cell>
                     <Table.Cell width={10}><a href={artist.external_urls.spotify} target='_blank'>{artist.name}</a></Table.Cell>
-                    <Table.Cell width={6}>
+                    <Table.Cell width={8}>
                         <FormattedNumber style='decimal' value={artist.followers.total}/>
                     </Table.Cell>
-                    <Table.Cell width={4}>
+                    <Table.Cell width={3}>
                         <div className='popularity-indicator-wrapper'>
                             <Progress className='popularity-indicator' color='green' percent={artist.popularity}/>
                         </div>

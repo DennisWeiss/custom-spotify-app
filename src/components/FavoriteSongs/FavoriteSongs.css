@@ -1,0 +1,13 @@
+@media (min-width: 800px) {
+    .top-songs-table {
+        margin: 130px auto;
+        padding: 0 20px;
+        max-width: 1400px;
+    }
+}
+
+@media (max-width: 799px) {
+    .top-songs-table {
+        margin: 130px 20px;
+    }
+}

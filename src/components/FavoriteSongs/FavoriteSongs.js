@@ -1,6 +1,7 @@
 import React from 'react'
 import FavoriteSongsTable from "./FavoriteSongsTable";
 import {getQueryString} from "../../helper/helperfunctions";
+import './FavoriteSongs.css'
 
 
 const mapSong = songData => ({
@@ -47,7 +48,7 @@ class FavoriteSongs extends React.Component {
     }
 
     render() {
-        return <div>
+        return <div className='top-songs-table'>
             <FavoriteSongsTable
                 songs={this.state.songs}
                 handleSorting={() => null}
