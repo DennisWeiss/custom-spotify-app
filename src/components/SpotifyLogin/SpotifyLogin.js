@@ -4,12 +4,14 @@ import './SpotifyLogin.css'
 import {getQueryString} from '../../helper/helperfunctions'
 import {spotifyClientId, redirectUri} from '../../configuration/configuration'
 
+const scopes = ['user-top-read', 'playlist-modify-public']
+
 const redirectUserToAuthentication = () => {
     window.location.href = getQueryString('https://accounts.spotify.com/authorize', {
         client_id: spotifyClientId,
         redirect_uri: redirectUri,
         response_type: 'token',
-        scope: 'user-top-read'
+        scope: scopes.join(' ')
     })
 }
 
