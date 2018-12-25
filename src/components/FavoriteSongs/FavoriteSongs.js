@@ -66,9 +66,7 @@ class FavoriteSongs extends React.Component {
                     headers: {
                         'Authorization': 'Bearer ' + this.props.authToken
                     },
-                    body: {
-                        name: 'My favorite songs'
-                    }
+                    body: JSON.stringify({name: 'My favorite songs'})
                 })
                     .then(res => res.json())
                     .then(playlist => {
@@ -77,9 +75,7 @@ class FavoriteSongs extends React.Component {
                             headers: {
                                 'Authorization': 'Bearer ' + this.props.authToken
                             },
-                            body: {
-                                uris: this.state.songs.map(song => song.uri)
-                            }
+                            body: JSON.stringify({uris: this.state.songs.map(song => song.uri)})
                         })
                             .then(res => res.json())
                             .then(data => {
